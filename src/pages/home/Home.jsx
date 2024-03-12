@@ -27,7 +27,11 @@ const Home = () => {
   const handleAddTask = (e) => {
     e.preventDefault();
     if (inputValue.trim() !== "") {
-      const newTask = { id: Date.now().toString(), content: inputValue };
+      const newTask = {
+        id: Date.now().toString(),
+        content: inputValue,
+        createdAt: new Date().toISOString(),
+      };
       setColumns((prevColumns) => ({
         ...prevColumns,
         todo: [...prevColumns.todo, newTask],
@@ -165,7 +169,16 @@ const Home = () => {
                                   {...provided.dragHandleProps}
                                   className="bg-white p-2 rounded mb-2 shadow border"
                                 >
-                                  {task.content}
+                                  <div className="font-semibold">
+                                    {task.content}
+                                  </div>
+                                  <div className="mt-2">
+                                    <p className="text-xs text-black/50">
+                                      {new Date(
+                                        task.createdAt
+                                      ).toLocaleString()}
+                                    </p>
+                                  </div>
                                 </li>
                               )}
                             </Draggable>
