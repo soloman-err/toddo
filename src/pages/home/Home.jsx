@@ -72,11 +72,11 @@ const Home = () => {
   ];
 
   return (
-    <div className="h-full">
+    <div className="min-h-screen">
       <Container>
-        <div className="flex">
+        <div className="flex min-h-screen">
           {/* Aside bar */}
-          <div className="flex flex-col min-w-44 border-r py-2 pr-2">
+          <div className="flex flex-col min-w-44 border-r py-2 pr-2 min-h-screen">
             {links.map((link, index) => (
               <Link
                 key={index}
@@ -88,7 +88,7 @@ const Home = () => {
             ))}
           </div>
 
-          {/* Content */}
+          {/* Main Content */}
           <div className="flex flex-col justify-start w-full h-full">
             {/* Form for adding tasks */}
             <div className="flex justify-start p-4">
@@ -114,7 +114,7 @@ const Home = () => {
 
             {/* Kanban Board */}
             <DragDropContext onDragEnd={handleDragEnd}>
-              <div className="flex justify-start w-full mx-auto p-4 gap-2">
+              <div className="flex justify-start w-full h-full mx-auto p-4 gap-2">
                 {Object.keys(columns).map((columnId) => (
                   <div key={columnId} className="w-full">
                     <div className="text-center bg-black text-white font-bold p-2 rounded">
@@ -131,7 +131,7 @@ const Home = () => {
                         <ul
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="border p-2 rounded w-full mt-2 h-96 overflow-y-auto"
+                          className="border p-2 rounded w-full mt-2 h-full overflow-y-auto"
                         >
                           {columns[columnId].map((task, index) => (
                             <Draggable
