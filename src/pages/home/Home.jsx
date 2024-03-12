@@ -2,6 +2,7 @@ import { useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Container from "../../components/container/Container";
 import { Link } from "react-router-dom";
+import { GripVertical } from "lucide-react";
 
 const Home = () => {
   const initialColumns = {
@@ -125,7 +126,10 @@ const Home = () => {
                 {Object.keys(columns).map((columnId) => (
                   <div key={columnId} className="w-full">
                     <div className="text-center bg-black text-white font-bold p-2 rounded">
-                      <h2>{columnId.toUpperCase()}</h2>
+                      <div className="flex items-center gap-1">
+                        <GripVertical size={16} />
+                        <p className="text-sm">{columnId.toUpperCase()}</p>
+                      </div>
                     </div>
 
                     {/* Droppable component */}
