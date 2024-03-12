@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Container from "../container/Container";
 
 const Header = () => {
@@ -6,7 +7,7 @@ const Header = () => {
       <Container>
         <div className="flex items-center justify-between w-full">
           {/* Brand */}
-          <div>
+          <Link to={"/"}>
             <h2 className="text-2xl uppercase font-bold">
               <span className="rotate-12 inline-block bg-black text-white rounded-sm px-[2px]">
                 T
@@ -32,7 +33,7 @@ const Header = () => {
             <span className="text-sm text-gray-500">
               Task Management System
             </span>
-          </div>
+          </Link>
 
           {/* Profile */}
           <div>

@@ -7,6 +7,7 @@ const Home = () => {
   const initialColumns = {
     todo: [],
     inProgress: [],
+    issues: [],
     done: [],
   };
 
@@ -86,6 +87,12 @@ const Home = () => {
                 {link.text}
               </Link>
             ))}
+
+            <div className="mt-auto">
+              <p className="text-sm font-semibold text-black/50">
+                &copy; Toddo {new Date().getFullYear()}
+              </p>
+            </div>
           </div>
 
           {/* Main Content */}
