@@ -72,16 +72,16 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <div className="h-full">
       <Container>
         <div className="flex">
           {/* Aside bar */}
-          <div className="flex flex-col min-w-44 border-r p-2">
+          <div className="flex flex-col min-w-44 border-r py-2 pr-2">
             {links.map((link, index) => (
               <Link
                 key={index}
                 to={link.url}
-                className="p-2 rounded-md hover:bg-gray-200 transition-colors"
+                className="text-sm font-semibold uppercase p-2 rounded hover:bg-gray-100 transition-colors text-black/70"
               >
                 {link.text}
               </Link>
@@ -89,9 +89,9 @@ const Home = () => {
           </div>
 
           {/* Content */}
-          <div className="w-full mt-10">
+          <div className="flex flex-col justify-start w-full h-full">
             {/* Form for adding tasks */}
-            <div className="flex justify-between">
+            <div className="flex justify-start p-4">
               <div></div>
               <div className="mt-auto">
                 <form onSubmit={handleAddTask} className="flex gap-2">
@@ -114,7 +114,7 @@ const Home = () => {
 
             {/* Kanban Board */}
             <DragDropContext onDragEnd={handleDragEnd}>
-              <div className="flex justify-between w-full max-w-4xl mx-auto p-10 rounded-lg gap-2">
+              <div className="flex justify-start w-full mx-auto p-4 gap-2">
                 {Object.keys(columns).map((columnId) => (
                   <div key={columnId} className="w-full">
                     <div className="text-center bg-black text-white font-bold p-2 rounded">
