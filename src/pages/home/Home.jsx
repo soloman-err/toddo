@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import Container from "../../components/container/Container";
 import { Link } from "react-router-dom";
@@ -13,7 +13,10 @@ const Home = () => {
   };
 
   const [inputValue, setInputValue] = useState("");
-  const [columns, setColumns] = useState(initialColumns);
+  const [columns, setColumns] = useState(() => {
+    const savedColumns = localStorage.getItem("columns");
+    return savedColumns ? JSON.parse(savedColumns) : initialColumns;
+  });
 
   // Handle input change:
   const handleInputChange = (e) => {
@@ -22,7 +25,7 @@ const Home = () => {
 
   // Handle tasks:
   const handleAddTask = (e) => {
-    e.preventDefault(); // Prevent form submission
+    e.preventDefault();
     if (inputValue.trim() !== "") {
       const newTask = { id: Date.now().toString(), content: inputValue };
       setColumns((prevColumns) => ({
@@ -65,6 +68,11 @@ const Home = () => {
       }));
     }
   };
+
+  // Save columns to local storage:
+  useEffect(() => {
+    localStorage.setItem("columns", JSON.stringify(columns));
+  }, [columns]);
 
   // Aside bar link-lists:
   const links = [
