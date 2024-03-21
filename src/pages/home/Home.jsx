@@ -1,8 +1,16 @@
 import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
-import Container from "../../components/container/Container";
 import { Link } from "react-router-dom";
 import { GripVertical } from "lucide-react";
+import Container from "@mui/material/Container";
+import {
+  Box,
+  Button,
+  List,
+  ListItem,
+  Typography,
+  TextField,
+} from "@mui/material";
 
 const Home = () => {
   const initialColumns = {
@@ -86,63 +94,112 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen">
+    <Box sx={{ minHeight: "100vh" }}>
       <Container>
-        <div className="flex min-h-screen">
+        <Box sx={{ display: "flex", minHeight: "100vh" }}>
           {/* Aside bar */}
-          <div className="flex flex-col min-w-44 border-r py-2 pr-2 min-h-screen">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              minWidth: 44,
+              borderRight: 1,
+              py: 2,
+              pr: 2,
+              minHeight: "100vh",
+            }}
+          >
             {links.map((link, index) => (
               <Link
                 key={index}
                 to={link.url}
-                className="text-sm font-semibold uppercase p-2 rounded hover:bg-gray-100 transition-colors text-black/70"
+                sx={{
+                  textDecoration: "none",
+                  p: 2,
+                  borderRadius: 1,
+                  "&:hover": { bgcolor: "grey.300" },
+                  textTransform: "uppercase",
+                  fontWeight: "bold",
+                  color: "grey.700",
+                }}
               >
                 {link.text}
               </Link>
             ))}
 
-            <div className="mt-auto">
-              <p className="text-sm font-semibold text-black/50">
+            <Box sx={{ mt: "auto" }}>
+              <Typography variant="body2" color="text.secondary">
                 &copy; Toddo {new Date().getFullYear()}
-              </p>
-            </div>
-          </div>
+              </Typography>
+            </Box>
+          </Box>
 
           {/* Main Content */}
-          <div className="flex flex-col justify-start w-full h-full">
+          <Box
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "start",
+              width: "100%",
+              height: "100%",
+            }}
+          >
             {/* Form for adding tasks */}
-            <div className="flex justify-start p-4">
-              <div></div>
-              <div className="mt-auto">
-                <form onSubmit={handleAddTask} className="flex gap-2">
-                  <input
+            <Box sx={{ display: "flex", justifyContent: "start", p: 4 }}>
+              <Box sx={{ mt: "auto" }}>
+                <form onSubmit={handleAddTask}>
+                  <TextField
                     type="text"
                     value={inputValue}
                     onChange={handleInputChange}
                     placeholder="Add task"
-                    className="bg-black/10 p-2 rounded"
+                    variant="outlined"
                   />
-                  <button
+                  <Button
                     type="submit"
-                    className="bg-black text-white px-5 rounded font-bold uppercase"
+                    variant="contained"
+                    sx={{ textTransform: "uppercase", fontWeight: "bold" }}
                   >
                     Add
-                  </button>
+                  </Button>
                 </form>
-              </div>
-            </div>
+              </Box>
+            </Box>
 
             {/* Kanban Board */}
             <DragDropContext onDragEnd={handleDragEnd}>
-              <div className="flex justify-start w-full h-full mx-auto p-4 gap-2">
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "start",
+                  width: "100%",
+                  height: "100%",
+                  p: 4,
+                  gap: 2,
+                }}
+              >
                 {Object.keys(columns).map((columnId) => (
-                  <div key={columnId} className="w-full">
-                    <div className="text-center bg-black text-white font-bold p-2 rounded">
-                      <div className="flex items-center gap-1">
+                  <Box key={columnId} sx={{ width: "100%" }}>
+                    <Box
+                      sx={{
+                        display: "flex",
+                        justifyContent: "center",
+                        bgcolor: "black",
+                        color: "white",
+                        fontWeight: "bold",
+                        p: 2,
+                        borderRadius: 1,
+                      }}
+                    >
+                      <Box
+                        sx={{ display: "flex", alignItems: "center", gap: 1 }}
+                      >
                         <GripVertical size={16} />
-                        <p className="text-sm">{columnId.toUpperCase()}</p>
-                      </div>
-                    </div>
+                        <Typography variant="body2">
+                          {columnId?.toUpperCase()}
+                        </Typography>
+                      </Box>
+                    </Box>
 
                     {/* Droppable component */}
                     <Droppable
@@ -151,10 +208,18 @@ const Home = () => {
                       type="group"
                     >
                       {(provided) => (
-                        <ul
+                        <List
                           {...provided.droppableProps}
                           ref={provided.innerRef}
-                          className="border p-2 rounded w-full mt-2 h-full overflow-y-auto"
+                          sx={{
+                            border: 1,
+                            p: 2,
+                            borderRadius: 1,
+                            width: "100%",
+                            mt: 2,
+                            height: "100%",
+                            overflowY: "auto",
+                          }}
                         >
                           {columns[columnId].map((task, index) => (
                             <Draggable
@@ -163,38 +228,53 @@ const Home = () => {
                               index={index}
                             >
                               {(provided) => (
-                                <li
+                                <ListItem
                                   ref={provided.innerRef}
                                   {...provided.draggableProps}
                                   {...provided.dragHandleProps}
-                                  className="bg-white p-2 rounded mb-2 shadow border"
+                                  sx={{
+                                    bgcolor: "white",
+                                    p: 2,
+                                    borderRadius: 1,
+                                    mb: 2,
+                                    boxShadow: 1,
+                                    border: 1,
+                                  }}
                                 >
-                                  <div className="font-semibold">
-                                    {task.content}
-                                  </div>
-                                  <div className="mt-2">
-                                    <p className="text-xs text-black/50">
-                                      {new Date(
-                                        task.createdAt
-                                      ).toLocaleString()}
-                                    </p>
-                                  </div>
-                                </li>
+                                  <Box>
+                                    <Typography
+                                      variant="body1"
+                                      fontWeight="bold"
+                                    >
+                                      {task.content}
+                                    </Typography>
+                                    <Box sx={{ mt: 2 }}>
+                                      <Typography
+                                        variant="body2"
+                                        color="text.secondary"
+                                      >
+                                        {new Date(
+                                          task.createdAt
+                                        ).toLocaleString()}
+                                      </Typography>
+                                    </Box>
+                                  </Box>
+                                </ListItem>
                               )}
                             </Draggable>
                           ))}
                           {provided.placeholder}
-                        </ul>
+                        </List>
                       )}
                     </Droppable>
-                  </div>
+                  </Box>
                 ))}
-              </div>
+              </Box>
             </DragDropContext>
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Container>
-    </div>
+    </Box>
   );
 };
 
