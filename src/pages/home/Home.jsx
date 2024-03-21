@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 import { Link } from "react-router-dom";
 import { GripVertical } from "lucide-react";
-import Container from "@mui/material/Container";
 import {
   Box,
   Button,
@@ -10,6 +9,7 @@ import {
   ListItem,
   Typography,
   TextField,
+  Container,
 } from "@mui/material";
 
 const Home = () => {
@@ -95,18 +95,23 @@ const Home = () => {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <Container>
-        <Box sx={{ display: "flex", minHeight: "100vh" }}>
+      <Container maxWidth="2xl">
+        <Box
+          sx={{
+            display: "flex",
+            minHeight: "100vh",
+            width: "100%",
+          }}
+        >
           {/* Aside bar */}
           <Box
             sx={{
               display: "flex",
               flexDirection: "column",
-              minWidth: 44,
               borderRight: 1,
               py: 2,
               pr: 2,
-              minHeight: "100vh",
+              gap: 1,
             }}
           >
             {links.map((link, index) => (
@@ -116,11 +121,12 @@ const Home = () => {
                 sx={{
                   textDecoration: "none",
                   p: 2,
-                  borderRadius: 1,
                   "&:hover": { bgcolor: "grey.300" },
                   textTransform: "uppercase",
                   fontWeight: "bold",
-                  color: "grey.700",
+                  "&:active": {
+                    bgcolor: "grey.400",
+                  },
                 }}
               >
                 {link.text}
