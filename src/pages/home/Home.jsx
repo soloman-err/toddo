@@ -10,6 +10,9 @@ import {
   Typography,
   TextField,
   Container,
+  IconButton,
+  Menu,
+  Drawer,
 } from "@mui/material";
 
 const Home = () => {
@@ -93,6 +96,12 @@ const Home = () => {
     { text: "Settings", url: "/settings" },
   ];
 
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+
+  const toggleSidebar = () => {
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
     <Box sx={{ minHeight: "100vh" }}>
       <Container maxWidth="2xl">
@@ -103,42 +112,49 @@ const Home = () => {
             width: "100%",
           }}
         >
-          {/* Aside bar */}
-          <Box
-            sx={{
-              display: "flex",
-              flexDirection: "column",
-              borderRight: 1,
-              py: 2,
-              pr: 2,
-              gap: 1,
-            }}
-          >
-            {links.map((link, index) => (
-              <Link
-                key={index}
-                to={link.url}
-                sx={{
-                  textDecoration: "none",
-                  p: 2,
-                  "&:hover": { bgcolor: "grey.300" },
-                  textTransform: "uppercase",
-                  fontWeight: "bold",
-                  "&:active": {
-                    bgcolor: "grey.400",
-                  },
-                }}
-              >
-                {link.text}
-              </Link>
-            ))}
+          {/* Sidebar toggle button */}
+          <IconButton onClick={toggleSidebar} sx={{ zIndex: 1 }}>
+            <Menu />
+          </IconButton>
 
-            <Box sx={{ mt: "auto" }}>
-              <Typography variant="body2" color="text.secondary">
-                &copy; Toddo {new Date().getFullYear()}
-              </Typography>
-            </Box>
-          </Box>
+          {/* Aside bar */}
+          <Drawer anchor="left" open={isSidebarOpen} onClose={toggleSidebar}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                borderRight: 1,
+                py: 2,
+                pr: 2,
+                gap: 1,
+              }}
+            >
+              {links.map((link, index) => (
+                <Link
+                  key={index}
+                  to={link.url}
+                  sx={{
+                    textDecoration: "none",
+                    p: 2,
+                    "&:hover": { bgcolor: "grey.300" },
+                    textTransform: "uppercase",
+                    fontWeight: "bold",
+                    "&:active": {
+                      bgcolor: "grey.400",
+                    },
+                  }}
+                >
+                  {link.text}
+                </Link>
+              ))}
+
+              <Box sx={{ mt: "auto" }}>
+                <Typography variant="body2" color="text.secondary">
+                  &copy; Toddo {new Date().getFullYear()}
+                </Typography>
+              </Box>
+            </Box>{" "}
+          </Drawer>
 
           {/* Main Content */}
           <Box
